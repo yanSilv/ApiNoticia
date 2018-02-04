@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="noticiApi">
+    <head>
+        <title>Exibição</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+        <link href="css/estilo.css" type="text/css" rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="imagens/fa.ico">
+        <script type="text/javascript" src="js/angular.js"></script>
+        <script type="text/javascript" src="js/angular-cookies.js"></script>
+        <script type="text/javascript" src="js/apps.js"></script>
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    </head>
+    <body ng-controller="noticiApiCtl">
+        <div class="container">
+            <div class="col-md-7 central">
+                <!--Div do Menu, Necessario Css-->
+                <nav class="navbar navbar-default">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a>Cadastrados Notícias</a></li>
+                        <li class=""><a href="#" data-toggle="modal" data-target="#gerarToken">Gerar Token</a></li>
+                    </ul>
+                </nav>
+
+                <div class="text-primary">
+                    <h3>Cadastro Notícia</h3>
+                </div>
+                <form name="cadNoticia">
+                    <div class="form-group">
+                        Função :
+                        <select class="form-control" name="cargo" id="cargo" ng-model="cad.cargo">
+                            <option ng-repeat="option in ComoboBox" value="{{option.name}}">{{option.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        Titulo:  <input type="text" class="form-control" placeholder="Titulo" name="titulo" ng-model="cad.titulo" ng-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">Conteudo:</label>
+                        <textarea class="form-control" rows="5" id="comment" ng-model="cad.conteudo" ></textarea>
+                    </div> 
+                </form>
+                <div class="form-group">
+                    <label id="Cadastrar" class="btn btn-primary" ng-click="enviadados(cad, token)">Cadastrar</label>
+                    <label class="btn btn-primary" ng-click="cancelar()" >Cancelar</label>
+                </div>
+
+
+
+                <table class="table table-striped table-hover text-primary" ng-init="exibir()">
+                    <thead>  
+                    <th>Data</th>
+                    <th>Cargo</th>
+                    <th>Titulo</th>
+                    <th>Conteudo</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat = "listUse in listUses" ng-click="selecionaUsuario(listUse)">
+                            <td>{{listUse.data | date:'dd/MM/yyyy'}}</td>
+                            <td>{{listUse.cargo}}</td>
+                            <td>{{listUse.titulo}}</td>
+                            <td>{{listUse.conteudo}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="gerarToken">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="text-primary">
+                                <h3>Acesso ao Sistema</h3>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <form name="loginForm">
+                                <div class="form-group">
+                                    Site: <input type="text" class="form-control" placeholder="Site" required="" ng-model="token.site">
+                                </div>
+                                <div class="form-group">
+                                    Token: <label ng-model="token.token">{{tokenCre}}</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <label class="btn btn-primary" ng-click="gerarToken(token)">Gerar</label>
+                                <label class="btn btn-primary" ng-click="ativarToken(token)">Ativar</label>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
